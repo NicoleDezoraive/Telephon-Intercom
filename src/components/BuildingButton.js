@@ -1,7 +1,7 @@
 import React from 'react'
 import { AiOutlineHome } from 'react-icons/ai';
 
-function BuildingButton({title, city}) 
+function BuildingButton({address, city}) 
 {
      
     const handleClick = (e) => {
@@ -11,7 +11,7 @@ function BuildingButton({title, city})
     return (
         <div className='BuildingButton'>
             <button className="button" onClick={handleClick} id=''>
-                {title} , {city}
+                {address}, {city}
                 <span className='home-icon'><AiOutlineHome/></span>
             </button>
         </div>

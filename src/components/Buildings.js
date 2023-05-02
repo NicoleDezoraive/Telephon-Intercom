@@ -1,5 +1,4 @@
 import React , {useState, useEffect} from 'react'
-import { MDBCol, MDBFormInline, MDBIcon } from "mdbreact";
 import BuildingButton from "../components/BuildingButton";
 // import Search from '../components/Search'; 
 import { AiOutlineSearch } from 'react-icons/ai';
@@ -8,28 +7,28 @@ function Buildings({})
 {
     const [buildingsData, setBuildingsData] = useState([]);
     // const [buildings, setBuildings] = useState([]);
-    
- 
-
     useEffect(() => {
-    //   const targetServer = 'https://connect4udbservice.azurewebsites.net/'
-      const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-      const targetUrl = 'https://connect4udbservice.azurewebsites.net/api/getbuildings';
-      fetch(proxyUrl + targetUrl)
+      const targetServer = process.env.REACT_APP_API_HOST
+      const api = 'api/getbuildings'
+      //const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+      //const targetUrl = 'https://connect4udbservice.azurewebsites.net/api/getbuildings';
+      fetch(targetServer + api)
         .then(response => response.json())
         .then(data => setBuildingsData(data))
         .catch(error => console.error(error));
-    }, [buildingsData]);
+    }, []);
     
     
     const addBuilding = async (building) => {
-        const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-        const targetUrlAddBuilding = 'https://connect4udbservice.azurewebsites.net/api/addbuilding';
+        const targetServer = process.env.REACT_APP_API_HOST
+        const api = 'api/addbuilding'
+        //const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+        //const targetUrlAddBuilding = 'https://connect4udbservice.azurewebsites.net/api/addbuilding';
         try {
-          const response = await fetch(proxyUrl + targetUrlAddBuilding, {
+          const response = await fetch(targetServer + api, {
             method: 'POST',
             headers: {
-              'Content-Type': 'application/json',
+              'Content-Type': 'application/json'
             },
             body: JSON.stringify(building),
           });
@@ -161,7 +160,7 @@ return (
         <div className='buildings-name'>
           {buildingsData.map((building) => (
             <div className='building' key={building.id}>
-              <BuildingButton title={building.title} city={building.fullAddress.city} />
+              <BuildingButton address={building.fullAddress.address} city={building.fullAddress.city} />
             </div>
           ))}
         </div>
