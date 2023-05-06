@@ -1,20 +1,22 @@
 import React , {useState, useEffect} from 'react'
 import BuildingButton from "../components/BuildingButton";
-// import Search from '../components/Search'; 
 import { AiOutlineSearch } from 'react-icons/ai';
 
 function Buildings({}) 
 {
     const [buildingsData, setBuildingsData] = useState([]);
-    // const [buildings, setBuildings] = useState([]);
+    const [initialBuildings, setInitialBuildingsData] = useState([]);
+    
     useEffect(() => {
       const targetServer = process.env.REACT_APP_API_HOST
       const api = 'api/getbuildings'
-      //const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-      //const targetUrl = 'https://connect4udbservice.azurewebsites.net/api/getbuildings';
       fetch(targetServer + api)
         .then(response => response.json())
-        .then(data => setBuildingsData(data))
+        .then(data => {
+          setBuildingsData(data);
+          setInitialBuildingsData(data);
+        }
+        )
         .catch(error => console.error(error));
     }, []);
     
@@ -118,6 +120,7 @@ function Buildings({})
             newWindow.close();
         });
     };
+    
 
     const handleSearch = (e) => {
         const input = e.target.value;
@@ -127,12 +130,12 @@ function Buildings({})
 
     const filterBuildings = (input) => {
         if (!input) {
-          return [];
+          return initialBuildings;
         }
         const regex = new RegExp(input, 'gi');
-        const filtered = buildingsData.filter(
+        const filtered = initialBuildings.filter(
           (building) =>
-            building.title.match(regex) || building.fullAddress.city.match(regex)
+            (building.title ? building.title.match(regex) : false) || building.fullAddress.city.match(regex) || building.fullAddress.address.match(regex)
         );
         return filtered;
       };
@@ -160,7 +163,11 @@ return (
         <div className='buildings-name'>
           {buildingsData.map((building) => (
             <div className='building' key={building.id}>
-              <BuildingButton address={building.fullAddress.address} city={building.fullAddress.city} />
+              <BuildingButton
+                address={building.fullAddress.address}
+                city={building.fullAddress.city}
+                id={building.id}
+              />
             </div>
           ))}
         </div>

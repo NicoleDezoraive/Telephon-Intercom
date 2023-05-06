@@ -1,11 +1,12 @@
-import React from 'react'
 import { AiOutlineHome } from 'react-icons/ai';
+import { useHistory } from 'react-router-dom';
+import React from 'react'
 
-function BuildingButton({address, city}) 
+function BuildingButton({address, city, id}) 
 {
-     
+    const history = useHistory();
     const handleClick = (e) => {
-       
+        history.push(`/building/${id}`);
     };
 
     return (
