@@ -4,8 +4,8 @@ import { AiOutlineSearch } from 'react-icons/ai';
 
 function Buildings({}) 
 {
-    const [buildingsData, setBuildingsData] = useState([]);
-    const [initialBuildings, setInitialBuildingsData] = useState([]);
+    const [buildingsData, setBuildingsData] = useState(null);
+    const [initialBuildings, setInitialBuildingsData] = useState(null);
     
     useEffect(() => {
       const targetServer = process.env.REACT_APP_API_HOST
@@ -158,9 +158,11 @@ return (
           <label>כתובת הבניין</label>
         </div>
       </div>
+      {buildingsData ? 
       <div className='show-buildings'>
-        <h2>יש לך {buildingsData.length} בניינים פעילים</h2>
+        <h2>יש לך {buildingsData ? buildingsData.length : 0} בניינים פעילים</h2>
         <div className='buildings-name'>
+
           {buildingsData.map((building) => (
             <div className='building' key={building.id}>
               <BuildingButton
@@ -172,6 +174,10 @@ return (
           ))}
         </div>
       </div>
+      : (
+        <p>...טוען</p>
+      )}
+      
     </div>
   );
 }

@@ -11,7 +11,7 @@ function BuildingButton({address, city, id})
 
     return (
         <div className='BuildingButton'>
-            <button className="button" onClick={handleClick} id=''>
+            <button className="button" onClick={handleClick} id='${id}'>
                 {address}, {city}
                 <span className='home-icon'><AiOutlineHome/></span>
             </button>

@@ -1,6 +1,7 @@
 // BuildingInfo.js
 
 import React, { useState, useEffect } from 'react';
+import FlatTable from './FlatTable';
 
 function BuildingInfo({ match }) {
   const [buildingData, setBuildingData] = useState(null);
@@ -21,17 +22,18 @@ function BuildingInfo({ match }) {
   }, [buildingId]);
 
   return (
+    <div>
+    {buildingData ? 
     <div className="building-info">
-      {buildingData ? (
-        <>
-          <h2>{buildingData.title}</h2>
-          <p>{buildingData.fullAddress.city}, {buildingData.fullAddress.address}</p>
-        </>
-      ) : (
-        <p>Loading...</p>
-      )}
+        <h2>{buildingData.title}</h2>
+        <p>{buildingData.fullAddress.city}, {buildingData.fullAddress.address}</p>
+        <FlatTable flatinfo={buildingData.flats} id={buildingData.id} ></FlatTable>
     </div>
-  );
+    : <h2>טוען בניין...</h2>
+      }
+    </div>
+    );
+  
 }
 
 export default BuildingInfo;
