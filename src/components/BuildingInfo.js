@@ -19,15 +19,15 @@ function BuildingInfo({ match }) {
       .catch((error) => {
         console.error('Error fetching building data:', error);
       });
-  }, [buildingId]);
+  }, []);
 
   return (
     <div>
     {buildingData ? 
     <div className="building-info">
-        <h2>{buildingData.title}</h2>
-        <p>{buildingData.fullAddress.city}, {buildingData.fullAddress.address}</p>
-        <FlatTable flatinfo={buildingData.flats} id={buildingData.id} ></FlatTable>
+        <h1>{buildingData.title}</h1>
+        <h2>{buildingData.fullAddress.city}, {buildingData.fullAddress.address}</h2>
+        <FlatTable flatinfo={buildingData.flats} buildingid={buildingId} ></FlatTable>
     </div>
     : <h2>טוען בניין...</h2>
       }

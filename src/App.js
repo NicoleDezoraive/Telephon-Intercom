@@ -2,6 +2,7 @@ import './App.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Buildings from "./components/Buildings";
 import BuildingInfo from './components/BuildingInfo';
+import FlatInfo from './components/FlatInfo';
 import "./style.css"
 
 function App() {
@@ -10,7 +11,9 @@ function App() {
       <Router>
         <Switch>
           <Route exact path="/" component={Buildings} />
+          <Route path="/building/:buildingId/:flatId" component={FlatInfo} />
           <Route path="/building/:buildingId" component={BuildingInfo} />
+          
         </Switch>
       </Router>
     </div>
